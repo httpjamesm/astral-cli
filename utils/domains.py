@@ -7,6 +7,8 @@ class domains():
             domainsResponse = domainsRequest.content
             domainsJSON = json.loads(domainsResponse)
             domainsList = []
+            num = 1
             for domain in domainsJSON['data']['domains']:
-                domainsList.append(domain['name'])
+                domainsList.append(str(num) + ". " + domain['name'])
+                num += 1
             print('\n'.join(domainsList))
