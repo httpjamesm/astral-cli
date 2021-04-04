@@ -1,8 +1,11 @@
 import requests, json
 
+# Files
+import data
+
 class domains():
     def getAllDomains(self):
-        domainsRequest = requests.get('https://beta.astral.cool/domains/')
+        domainsRequest = requests.get(data.configdata["credentials"]["endpoint"] + "domains")
         if domainsRequest.status_code == 200:
             domainsResponse = domainsRequest.content
             domainsJSON = json.loads(domainsResponse)

@@ -2,6 +2,7 @@
 import json, requests, pickle
 # Files
 import utils.json as jsonutils
+import data
 
 class accounts():
     def addToken(self, username, password):
@@ -96,3 +97,16 @@ class accounts():
         responseJSON = json.loads(tokenPOST.content)
         return responseJSON["data"]["token"]
 
+    def getUploadKey(self):
+        authorization = {
+            "Authorization": "Bearer " + self.getAccessToken(),
+            "Content-Type": "application/json"
+        }
+        uploadKeyGET = requests.get(data.configdata["credentials"]["endpoint"] + "settings/upload_key", headers=authorization)
+        db = data.configdata
+        db["credentials"]["uploadkey"] = json.loads(uploadKeyGET.content)["data"]
+        with open("data.json","r+") as dbfile:
+            dbfile.seek(0)
+            dbfile.truncate(0)
+            jsonutils.write_json(db)
+        print("Upload key stored.")

@@ -24,4 +24,6 @@ class main():
         setting = args[loginPos + 1]
         value = args[loginPos + 2]
         settings().changeSetting(setting, value)
+    if "--uploadkey" in args:
+        accounts().getUploadKey()
 
