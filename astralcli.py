@@ -8,7 +8,9 @@ from utils.settings import settings
 from utils.upload import upload
 
 class main():
-    args = sys.argv[1:]
+    # Main file that receives CLI arguments.
+
+    args = sys.argv[1:] # Get the arguments, not including the actual file name.
     if "--domains" in args:
         domains().getAllDomains()
     if "--login" in args:

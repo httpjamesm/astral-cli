@@ -5,27 +5,37 @@ from utils.accounts import accounts
 
 class settings():
     def viewAllSettings(self):
+        # View all user settings and their values
+
+        # Request headers with user access token
         authorization = {
             "Authorization": "Bearer " + accounts().getAccessToken()
         }
         settingsRequest = requests.get(data.configdata["credentials"]["endpoint"] + "settings", headers=authorization)
         if settingsRequest.status_code == 200:
+            # If the request returns code 200 (OK)
             settingsResponse = settingsRequest.content
             settingsJSON = json.loads(settingsResponse)
             settingsJSON = settingsJSON["data"]
             pairs = settingsJSON.items()
             for setting,value in pairs:
                 print(str(setting + ": " + str(value)))
+            # Get upload key
             uploadKeyGET = json.loads(requests.get(data.configdata["credentials"]["endpoint"] + "settings/upload_key", headers=authorization).content)
+            # Get random domains list
             randomDomainsGET = json.loads(requests.get(data.configdata['credentials']['endpoint'] + "settings/random_domains", headers=authorization).content)
             print("[info] Random domains: " + str(randomDomainsGET["data"]))
             print("[info] Upload Key: " + uploadKeyGET["data"] + " (use --regen-upkey to regenerate)")
     
     def changeSetting(self, setting, value):
+        # Change a user setting to a value
+
+        # Request headers with user access token
         authorization = {
             "Authorization": "Bearer " + accounts().getAccessToken(),
             "Content-Type": "application/json"
         }
+        # Setting with new value
         changeJSON = {
             setting: value
         }

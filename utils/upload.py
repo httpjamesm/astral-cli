@@ -8,7 +8,10 @@ import data
 
 class upload():
     def uploadFile(self, path):
+        # Upload a file to Astral
+
         if os.path.getsize(path) > 100000000:
+            # If the specified file is over 100 mb
             userChoice = input("[?] The file you're trying to upload is above Astral's 100mb upload limit. Do you wish to override? [y/N]: ")
             if userChoice.lower() == "n":
                 print("[x] Cancelling upload...")
@@ -17,14 +20,17 @@ class upload():
         
         print("[\] Uploading file " + path + "...")
         try:
+            # Try to read the file in binary format
             files = open(path,"rb")
         except:
             print("[x] Couldn't read file.")
             return
         
+        # Request headers with user access token
         authorization = {
             "Authorization": data.configdata["credentials"]["uploadkey"]
         }
+        # File request with name, file content and mimetype
         files = {
             "file": (files.name, files, mimetypes.guess_type(path)[0])
         }
@@ -39,9 +45,11 @@ class upload():
             print("[x] Received unexpected response from Astral API. Debug info below:\n\n" + str(e) + "\n\nJSON Response:\n" + str(uploadRequest.content))
             return
         if responseJSON["code"] == "success":
+            # Copy the URL to clipboard
             r = Tk()
             r.withdraw()
             r.clipboard_clear()
+            # Append the decoded URL to the user's clipboard
             r.clipboard_append(requests.utils.unquote(requests.utils.quote(responseJSON["fileURL"].encode(), safe=':/')))
             r.update() # now it stays on the clipboard after the window is closed
             r.destroy()
