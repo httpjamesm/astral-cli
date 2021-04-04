@@ -19,3 +19,9 @@ class main():
         accounts().astralLogin()
     if "gettoken" in args:
         accounts().getAccessToken()
+    if "--change" in args:
+        loginPos = args.index("--change")
+        setting = args[loginPos + 1]
+        value = args[loginPos + 2]
+        settings().changeSetting(setting, value)
+
