@@ -110,3 +110,15 @@ class accounts():
             dbfile.truncate(0)
             jsonutils.write_json(db)
         print("Upload key stored.")
+    
+    def regenUploadKey(self):
+        print("[\] Regenerating upload key...")
+        authorization = {
+            "Authorization": "Bearer " + self.getAccessToken(),
+        }
+        try:
+            uploadKeyPOST = requests.post(data.configdata["credentials"]["endpoint"] + "settings/upload_key", headers=authorization)
+        except Exception as e:
+            print("[x] An unexpected error occured while regenerating your upload key. Debug info below:\n\n" +str(e) + "\n\nJSON Response:\n" + str(uploadKeyPOST.content))
+            return
+        self.getUploadKey()

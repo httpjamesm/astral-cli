@@ -30,3 +30,5 @@ class main():
     if "--upload" in args:
         argPos = args.index("--upload")
         upload().uploadFile(args[argPos + 1])
+    if "--regen-upkey" in args:
+        accounts().regenUploadKey()
