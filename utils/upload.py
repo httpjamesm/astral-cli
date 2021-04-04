@@ -1,9 +1,6 @@
 import requests, json, mimetypes, os
 from urllib.parse import urlparse, parse_qs
 from tkinter import Tk
-
-
-
 # Files
 
 import utils.accounts

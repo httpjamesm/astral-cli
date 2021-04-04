@@ -28,6 +28,11 @@ class settings():
             setting: value
         }
         changeRequest = requests.patch(data.configdata["credentials"]["endpoint"] + "settings", headers=authorization, data=json.dumps(changeJSON))
-        if changeRequest.status_code == 200:
+        responseJSON = json.loads(changeRequest.content)
+        if responseJSON["code"] == "success":
             print("Successfully changed setting " + setting + " to value " + value + ".")
             return
+        if responseJSON["code"] == "bad-request" and responseJSON["message"] == "Invalid fields":
+            print("[x] Invalid setting or setting value.")
+            return
+        print("[x] An unexpected error occured changing setting" + setting + " to value " + value + ".")

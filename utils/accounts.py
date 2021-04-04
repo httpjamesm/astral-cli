@@ -15,7 +15,8 @@ class accounts():
             "credentials": {
                 "username": username,
                 "password": password,
-                "endpoint": "https://beta.astral.cool/"
+                "endpoint": "https://beta.astral.cool/",
+                "encrypted": False
             }
         }
         try:

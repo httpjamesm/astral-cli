@@ -5,14 +5,15 @@ import data
 
 class domains():
     def getAllDomains(self):
-        domainsRequest = requests.get(data.configdata["credentials"]["endpoint"] + "domains")
+        domainsRequest = requests.get(data.configdata["credentials"]["endpoint"] + "domains/list")
+        print(domainsRequest.content)
         if domainsRequest.status_code == 200:
             domainsResponse = domainsRequest.content
             domainsJSON = json.loads(domainsResponse)
             domainsList = []
             num = 1
             for domain in domainsJSON['data']['domains']:
-                domainsList.append(str(num) + ". " + domain['name'])
+                domainsList.append(str(num) + ". " + domain)
                 num += 1
             print('\n'.join(domainsList))
         else:

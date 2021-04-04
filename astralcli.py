@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import sys
 
 from utils.domains import domains
