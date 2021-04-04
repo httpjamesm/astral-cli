@@ -34,3 +34,9 @@ class main():
         upload().uploadFile(args[argPos + 1])
     if "--regen-upkey" in args:
         accounts().regenUploadKey()
+    if "--add-random-domain" in args:
+        argPos = args.index("--add-random-domain")
+        domains().addRandomDomain(args[argPos + 1])
+    if "--del-random-domain" in args:
+        argPos = args.index("--del-random-domain")
+        domains().delRandomDomain(args[argPos + 1])

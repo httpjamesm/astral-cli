@@ -17,7 +17,9 @@ class settings():
             for setting,value in pairs:
                 print(str(setting + ": " + str(value)))
             uploadKeyGET = json.loads(requests.get(data.configdata["credentials"]["endpoint"] + "settings/upload_key", headers=authorization).content)
-            print("[info] Upload Key: " + uploadKeyGET["data"] + " (use --regen-upkey to regenerate Upload Key.)")
+            randomDomainsGET = json.loads(requests.get(data.configdata['credentials']['endpoint'] + "settings/random_domains", headers=authorization).content)
+            print("[info] Random domains: " + str(randomDomainsGET["data"]))
+            print("[info] Upload Key: " + uploadKeyGET["data"] + " (use --regen-upkey to regenerate)")
     
     def changeSetting(self, setting, value):
         authorization = {

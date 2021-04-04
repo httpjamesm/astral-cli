@@ -25,7 +25,8 @@ class accounts():
             print("An unexpected error occured while logging into Astral.\n\n" + str(e))
             return
         
-        print("Account token successfully added.")
+        print("[v] Account credentials successfully stored.\n[\] Getting Astral session data...")
+        self.astralLogin()
     
     def editToken(self, token):
         with open("data.json", "r+") as dbfile:
@@ -67,7 +68,7 @@ class accounts():
         if loginResponse["code"] == "success":
             with open("astralsession.txt", "wb") as astralsession:
                 pickle.dump(loginSession.cookies, astralsession)
-            print("Logged in!")
+            print("[v] Logged in!")
             return
         print("[x] There was an error logging you in.\n\n" + loginResponse["message"])
     
