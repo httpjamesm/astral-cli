@@ -27,6 +27,9 @@ class accounts():
         
         print("[v] Account credentials successfully stored.\n[\] Getting Astral session data...")
         self.astralLogin()
+        print("[\] Getting upload key...")
+        self.getUploadKey()
+        print("[v] We're done.")
     
     def editToken(self, token):
         with open("data.json", "r+") as dbfile:
@@ -104,14 +107,15 @@ class accounts():
             "Authorization": "Bearer " + self.getAccessToken(),
             "Content-Type": "application/json"
         }
-        uploadKeyGET = requests.get(data.configdata["credentials"]["endpoint"] + "settings/upload_key", headers=authorization)
-        db = data.configdata
-        db["credentials"]["uploadkey"] = json.loads(uploadKeyGET.content)["data"]
         with open("data.json","r+") as dbfile:
+            data.configdata = json.load(dbfile)
+            uploadKeyGET = requests.get(data.configdata["credentials"]["endpoint"] + "settings/upload_key", headers=authorization)
+            db = data.configdata
+            db["credentials"]["uploadkey"] = json.loads(uploadKeyGET.content)["data"]
             dbfile.seek(0)
             dbfile.truncate(0)
             jsonutils.write_json(db)
-        print("Upload key stored.")
+        print("[v] Upload key stored.")
     
     def regenUploadKey(self):
         print("[\] Regenerating upload key...")
