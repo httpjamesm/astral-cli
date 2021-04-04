@@ -1,4 +1,4 @@
-import requests, json, mimetypes
+import requests, json, mimetypes, os
 
 # Files
 
@@ -7,6 +7,14 @@ import data
 
 class upload():
     def uploadFile(self, path):
+        if os.path.getsize(path) > 100000000:
+            userChoice = input("[?] The file you're trying to upload is above Astral's 100mb upload limit. Do you wish to override? [y/N]: ")
+            if userChoice.lower() == "n":
+                print("[x] Cancelling upload...")
+                return
+            print("[v] Overriding local file size check...")
+        
+        print("[\] Uploading file " + path + "...")
         try:
             files = open(path,"rb")
         except:
