@@ -1,4 +1,8 @@
 import requests, json, mimetypes, os
+from urllib.parse import urlparse, parse_qs
+from tkinter import Tk
+
+
 
 # Files
 
@@ -38,7 +42,13 @@ class upload():
             print("[x] Received unexpected response from Astral API. Debug info below:\n\n" + str(e) + "\n\nJSON Response:\n" + str(uploadRequest.content))
             return
         if responseJSON["code"] == "success":
-            print("Upload URL: " + responseJSON["fileURL"] + "\nDelete URL: " + responseJSON["deletionURL"])
+            r = Tk()
+            r.withdraw()
+            r.clipboard_clear()
+            r.clipboard_append(requests.utils.unquote(requests.utils.quote(responseJSON["fileURL"].encode(), safe=':/')))
+            r.update() # now it stays on the clipboard after the window is closed
+            r.destroy()
+            print("Upload URL: " + requests.utils.unquote(requests.utils.quote(responseJSON["fileURL"].encode(), safe=':/')) + "\nDelete URL: " + responseJSON["deletionURL"] + "\n\n[!] Upload URL has been copied to clipboard.")
         else:
             print("[x] Error uploading file.\n")
             if responseJSON["message"] == "Invalid mimetype":
