@@ -3,6 +3,7 @@ import sys
 from utils.domains import domains
 from utils.accounts import accounts
 from utils.settings import settings
+from utils.upload import upload
 
 class main():
     args = sys.argv[1:]
@@ -26,4 +27,6 @@ class main():
         settings().changeSetting(setting, value)
     if "--uploadkey" in args:
         accounts().getUploadKey()
-
+    if "--upload" in args:
+        argPos = args.index("--upload")
+        upload().uploadFile(args[argPos + 1])

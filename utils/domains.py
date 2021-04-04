@@ -15,3 +15,5 @@ class domains():
                 domainsList.append(str(num) + ". " + domain['name'])
                 num += 1
             print('\n'.join(domainsList))
+        else:
+            print(domainsRequest.content)
