@@ -18,17 +18,11 @@ class main():
         accounts().addToken(username, password)
     if "--settings" in args:
         settings().viewAllSettings()
-    if "logintoastral" in args:
-        accounts().astralLogin()
-    if "gettoken" in args:
-        accounts().getAccessToken()
     if "--change" in args:
         loginPos = args.index("--change")
         setting = args[loginPos + 1]
         value = args[loginPos + 2]
         settings().changeSetting(setting, value)
-    if "--uploadkey" in args:
-        accounts().getUploadKey()
     if "--upload" in args:
         argPos = args.index("--upload")
         upload().uploadFile(args[argPos + 1])
