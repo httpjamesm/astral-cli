@@ -27,7 +27,11 @@ class upload():
         files = {
             "file": (files.name, files, mimetypes.guess_type(path)[0])
         }
-        uploadRequest = requests.post(data.configdata["credentials"]["endpoint"] + "files", files=files, headers=authorization)
+        try:
+            uploadRequest = requests.post(data.configdata["credentials"]["endpoint"] + "files", files=files, headers=authorization)
+        except:
+            print("[x] An unexpected error occured while uploading " + path + ".")
+            return
         try:
             responseJSON = json.loads(uploadRequest.content)
         except Exception as e:
