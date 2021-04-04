@@ -14,7 +14,7 @@ class upload():
             return
         
         authorization = {
-            "api_key": data.configdata["credentials"]["uploadkey"]
+            "Authorization": data.configdata["credentials"]["uploadkey"]
         }
         files = {
             "file": (files.name, files, mimetypes.guess_type(path)[0])
@@ -31,3 +31,5 @@ class upload():
             print("[x] Error uploading file.\n")
             if responseJSON["message"] == "Invalid mimetype":
                 print("Invalid file type. Did you try to upload a disallowed file?")
+            elif responseJSON["message"] == "The provided upload key does not exist":
+                print("Invalid API key. Did you edit your key in data.json?")
