@@ -7,6 +7,7 @@ class settings():
     def viewAllSettings(self):
         # View all user settings and their values
 
+        print("[\] Getting Astral settings...")
         # Request headers with user access token
         authorization = {
             "Authorization": "Bearer " + accounts().getAccessToken()
@@ -18,14 +19,16 @@ class settings():
             settingsJSON = json.loads(settingsResponse)
             settingsJSON = settingsJSON["data"]
             pairs = settingsJSON.items()
+            settingslist = []
             for setting,value in pairs:
-                print(str(setting + ": " + str(value)))
+                settingslist.append(str(setting + ": " + str(value)))
             # Get upload key
             uploadKeyGET = json.loads(requests.get(data.configdata["credentials"]["endpoint"] + "settings/upload_key", headers=authorization).content)
             # Get random domains list
             randomDomainsGET = json.loads(requests.get(data.configdata['credentials']['endpoint'] + "settings/random_domains", headers=authorization).content)
-            print("[info] Random domains: " + str(randomDomainsGET["data"]))
-            print("[info] Upload Key: " + uploadKeyGET["data"] + " (use --regen-upkey to regenerate)")
+            settingslist.append("[info] Random domains: " + str(randomDomainsGET["data"]))
+            settingslist.append("[info] Upload Key: " + uploadKeyGET["data"] + " (use --regen-upkey to regenerate)")
+            print("\n" + '\n'.join(settingslist))
     
     def changeSetting(self, setting, value):
         # Change a user setting to a value
