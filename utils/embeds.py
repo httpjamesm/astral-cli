@@ -46,4 +46,5 @@ class embeds():
 
         embedRequest = requests.put(data.configdata["credentials"]["endpoint"] + "settings/embeds", headers=authorization, data=json.dumps(dataTemplate))
         embedJSON = json.loads(embedRequest.content)
-        print(embedJSON)
+        if embedJSON["code"] == "success":
+            print("[v] Successfully created embed preset.")
