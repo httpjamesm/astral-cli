@@ -1,5 +1,5 @@
 # Libraries/Modules
-import json, requests, pickle
+import json, requests, pickle, os
 # Files
 import utils.json as jsonutils
 import data
@@ -145,13 +145,28 @@ class accounts():
         print("[\] Regenerating upload key...")
         
         # Request headers with user access token
-        authorization = {
-            "Authorization": "Bearer " + self.getAccessToken(),
-        }
-        
+        try:
+            authorization = {
+                "Authorization": "Bearer " + self.getAccessToken(),
+            }
+        except:
+            return
         try:
             uploadKeyPOST = requests.post(data.configdata["credentials"]["endpoint"] + "settings/upload_key", headers=authorization)
         except Exception as e:
             print("[x] An unexpected error occured while regenerating your upload key. Debug info below:\n\n" +str(e) + "\n\nJSON Response:\n" + str(uploadKeyPOST.content))
             return
         self.getUploadKey()
+    
+    def clearData(self):
+        # Clear all account and session data locally.
+        userChoice = input("Are you sure you want to irreversibly remove all local AstralCLI data? [y/N]: ")
+        if userChoice.lower() == "y":
+            print("[\] Clearing local data...")
+
+            if os.path.exists("data.json"):
+                os.remove("data.json")
+            if os.path.exists("astralsession.txt"):
+                os.remove("astralsession.txt")
+            
+            print("[\] All local data successfully removed.")

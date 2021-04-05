@@ -27,9 +27,14 @@ class upload():
             return
         
         # Request headers with user access token
-        authorization = {
-            "Authorization": data.configdata["credentials"]["uploadkey"]
-        }
+        try:
+            authorization = {
+                "Authorization": data.configdata["credentials"]["uploadkey"]
+            }
+        except:
+            print("[x] Couldn't find account data. Did you login yet?")
+            return
+            
         # File request with name, file content and mimetype
         files = {
             "file": (files.name, files, mimetypes.guess_type(path)[0])

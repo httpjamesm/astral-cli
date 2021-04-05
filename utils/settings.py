@@ -9,9 +9,12 @@ class settings():
 
         print("[\] Getting Astral settings...")
         # Request headers with user access token
-        authorization = {
-            "Authorization": "Bearer " + accounts().getAccessToken()
-        }
+        try:
+            authorization = {
+                "Authorization": "Bearer " + accounts().getAccessToken()
+            }
+        except:
+            return
         settingsRequest = requests.get(data.configdata["credentials"]["endpoint"] + "settings", headers=authorization)
         if settingsRequest.status_code == 200:
             # If the request returns code 200 (OK)
@@ -34,10 +37,13 @@ class settings():
         # Change a user setting to a value
 
         # Request headers with user access token
-        authorization = {
-            "Authorization": "Bearer " + accounts().getAccessToken(),
-            "Content-Type": "application/json"
-        }
+        try:
+            authorization = {
+                "Authorization": "Bearer " + accounts().getAccessToken(),
+                "Content-Type": "application/json"
+            }
+        except:
+            return
         if setting == "selectedEmbedPreset":
             value = int(value)
 
