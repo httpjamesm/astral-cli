@@ -48,3 +48,28 @@ class embeds():
         embedJSON = json.loads(embedRequest.content)
         if embedJSON["code"] == "success":
             print("[v] Successfully created embed preset.")
+            return
+        elif embedJSON["code"] == "limit-reached":
+            print("[x] You have too many embed presets. Delete one first before creating a new one.")
+            return
+        else:
+            print("[x] An unknown error occured. Debug info below:\n\n")
+            print(embedJSON)
+            return
+    
+    def deleteEmbedPreset(self, number):
+        try:
+            number = int(number)
+        except:
+            print("[x] Invalid integer.")
+            return
+        
+        authorization = {
+            "Authorization": "Bearer " + accounts().getAccessToken()
+        }
+        deleteRequest = requests.delete(data.configdata["credentials"]["endpoint"] + "settings/embeds/" + str(number), headers=authorization)
+        requestJSON = json.loads(deleteRequest.content)
+        if requestJSON["code"] == "success":
+            print("[v] Embed " + str(number) + " has been deleted.")
+            return
+        print("[x] An unknown error occured. Debug info below:\n\n" + str(requestJSON))

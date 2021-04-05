@@ -41,3 +41,6 @@ class main():
         embeds().getAllEmbeds()
     if "--new-embed" in args:
         embeds().createNewEmbed()
+    if "--del-embed" in args:
+        argPos = args.index("--del-embed")
+        embeds().deleteEmbedPreset(args[argPos + 1])
