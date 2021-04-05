@@ -6,6 +6,7 @@ from utils.domains import domains
 from utils.accounts import accounts
 from utils.settings import settings
 from utils.upload import upload
+from utils.embeds import embeds
 
 class main():
     # Main file that receives CLI arguments.
@@ -36,3 +37,7 @@ class main():
     if "--del-random-domain" in args:
         argPos = args.index("--del-random-domain")
         domains().delRandomDomain(args[argPos + 1])
+    if "--embeds" in args:
+        embeds().getAllEmbeds()
+    if "--new-embed" in args:
+        embeds().createNewEmbed()

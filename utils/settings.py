@@ -35,14 +35,18 @@ class settings():
             "Authorization": "Bearer " + accounts().getAccessToken(),
             "Content-Type": "application/json"
         }
+        if setting == "selectedEmbedPreset":
+            value = int(value)
+
         # Setting with new value
         changeJSON = {
-            setting: value
+            setting: int(value)
         }
+            
         changeRequest = requests.patch(data.configdata["credentials"]["endpoint"] + "settings", headers=authorization, data=json.dumps(changeJSON))
         responseJSON = json.loads(changeRequest.content)
         if responseJSON["code"] == "success":
-            print("Successfully changed setting " + setting + " to value " + value + ".")
+            print("Successfully changed setting " + setting + " to value " + str(value) + ".")
             return
         if responseJSON["code"] == "bad-request" and responseJSON["message"] == "Invalid fields":
             print("[x] Invalid setting or setting value.")
