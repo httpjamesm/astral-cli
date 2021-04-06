@@ -49,7 +49,7 @@ class settings():
 
         # Setting with new value
         changeJSON = {
-            setting: int(value)
+            setting: value
         }
             
         changeRequest = requests.patch(data.configdata["credentials"]["endpoint"] + "settings", headers=authorization, data=json.dumps(changeJSON))
