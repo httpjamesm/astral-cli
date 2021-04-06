@@ -78,7 +78,8 @@ class embeds():
         }
 
         authorization = {
-            "Authorization": "Bearer " + accounts().getAccessToken()
+            "Authorization": "Bearer " + accounts().getAccessToken(),
+            "Content-Type": "application/json"
         }
 
         editRequest = requests.patch(data.configdata["credentials"]["endpoint"] + "settings/embeds/"+ str(number), headers=authorization, data=dataTemplate).json()
