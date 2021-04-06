@@ -56,6 +56,38 @@ class embeds():
             print("[x] An unknown error occured. Debug info below:\n\n")
             print(embedJSON)
             return
+            
+    def editEmbedPreset(self, number: int):
+        title = input("Title: ")
+        description = input("Description: ")
+        author = input("Author: ")
+        domain = input("Site: ")
+        color = input("Color: ")
+        randomColor = input("Random Embed Color [true/false]: ").lower()
+        if randomColor not in ["true","false"]:
+            print("[x] Invalid choice for random color.")
+            return
+
+        dataTemplate = {
+            "title": title,
+            "description": description,
+            "author": author,
+            "site": domain,
+            "color": color,
+            "randomColor": randomColor
+        }
+
+        authorization = {
+            "Authorization": "Bearer " + accounts().getAccessToken(),
+            "Content-Type": "application/json"
+        }
+
+        editRequest = requests.patch(data.configdata["credentials"]["endpoint"] + "settings/embeds/"+ str(number), headers=authorization, data=json.dumps(dataTemplate)).json()
+
+        if editRequest["code"] == "success":
+            print("[v] Successfully edited embed preset.")
+            return
+        print("[x] An unknown error occured. Debug info below:\n\n" + str(editRequest))
     
     def deleteEmbedPreset(self, number):
         try:

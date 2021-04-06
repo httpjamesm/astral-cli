@@ -58,5 +58,8 @@ class main():
     if "--del-embed" in args:
         argPos = args.index("--del-embed")
         embeds().deleteEmbedPreset(args[argPos + 1])
+    if "--edit-embed" in args:
+        argPos = args.index("--edit-embed")
+        embeds().editEmbedPreset(args[argPos + 1])
     if "--clear" in args:
         accounts().clearData()
