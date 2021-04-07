@@ -46,13 +46,11 @@ class accounts():
             dbfile.truncate(0)
             jsonutils.write_json(dbJSON)
 
-    def editToken(self, token):
-        # Unfinished
-        with open("data.json", "r+") as dbfile:
-            try:
-                dataJSON = json.load(dbfile)
-            except:
-                print("Unexpected error while reading data.json file. Is the file corrupted? Remove it and try again.")
+    def editToken(self, username, password):
+        # Edit username + password/relogin
+
+        self.clearData()
+        self.addToken(username, password)
 
     def astralLogin(self):
         # Get Astral session cookies and store them to disk

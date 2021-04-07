@@ -24,6 +24,16 @@ class main():
             print("[x] Couldn't find username or password in your arguments.")
             exit()
         accounts().addToken(username, password)
+    if "--relogin" in args:
+        loginPos = args.index("--relogin")
+        try:
+            username = args[loginPos + 1]
+            password = args[loginPos + 2]
+        except:
+            print("[x] Couldn't find username or password in your arguments.")
+            exit()
+        accounts().editToken(username, password)
+
     if "--settings" in args:
         settings().viewAllSettings()
     if "--change" in args:
