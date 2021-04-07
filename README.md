@@ -2,6 +2,32 @@
 
 Astral CLI is a command line client for uploading media to Astral, a private image host.
 
+# Features
+
+## Speedy
+
+Change a setting, add a random domain and create a new embed profile within *seconds*. Account credentials are already stored, so no need to login every time or launch a web browser. All it takes is a keyboard and fingers.
+
+## Lightweight
+
+Astral CLI is an easy-to-use and lightweight (in size and memory usage) command line interface to interact with Astral's API. You could install this on a toaster if you really wanted to!
+
+## Automatic Access Token Generation
+
+No need to constantly send POST requests to generate access tokens every 5 minutes because Astral CLI does it for you seamlessly. On every request, whether it's to change a setting or create a new embed profile, Astral CLI conveniently fetches a new access token in the background.
+
+## Linux Compatible
+
+Are you using a Linux distro? No problemo. Astral CLI is independent of screenshot apps, like ShareX, so you can keep on uploading without Windows spyware.
+
+## Open-Source
+
+Since Astral CLI is open-source, you can audit its code to verify that I am not doing anything malicious or even contribute to the project! If have an idea to make it even better, fork it and make a pull request.
+
+## Endorsed
+
+Aspect, the founder of Astral, has shouted out Astral CLI in the [official astralcool Github organization](https://github.com/astralcool/cli).
+
 # Installation Instructions
 
 Clone this git onto your computer. Run the following commands in order.
