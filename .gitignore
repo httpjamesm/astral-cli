@@ -1,4 +1,5 @@
 __pycache__/
 utils/__pycache__/
+utils/classes/__pycache__
 data.json
 astralsession.txt

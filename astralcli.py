@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import sys, getpass
+import sys
 
 from utils.domains import domains
 from utils.accounts import accounts
@@ -63,13 +63,6 @@ class main():
         embeds().editEmbedPreset(args[argPos + 1])
     if "--clear" in args:
         accounts().clearData()
-    if "--encrypt" in args:
-        userPass = getpass.getpass(prompt="New Encryption Password: ")
-        userPassConfirmation = getpass.getpass(prompt="Confirm Encryption Password: ")
-        if userPass == userPassConfirmation:
-            accounts().encryptData(userPass)
-        else:
-            print("[x] Password mismatch.")
     if "--help" in args:
         print(
             """

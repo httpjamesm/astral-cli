@@ -35,7 +35,17 @@ class accounts():
         print("[\] Getting upload key...")
         self.getUploadKey()
         print("[v] We're done.")
-    
+        self.wipeLogin()
+
+    def wipeLogin(self):
+        with open("data.json", "r+") as dbfile:
+            dbJSON = json.load(dbfile)
+            del dbJSON["credentials"]["username"]
+            del dbJSON["credentials"]["password"]
+            dbfile.seek(0)
+            dbfile.truncate(0)
+            jsonutils.write_json(dbJSON)
+
     def editToken(self, token):
         # Unfinished
         with open("data.json", "r+") as dbfile:
@@ -67,7 +77,7 @@ class accounts():
         except:
             print("Credentials aren't present in data.json, did you run --login <username> <password>?")
             return
-        
+
         # Create a new requests session to store cookies
         loginSession = requests.Session()
         loginRequestJSON = {
@@ -104,14 +114,6 @@ class accounts():
             print("Malformed data.json file. Remove it and use --login <username> <password>, and then run this command again.")
             return
         
-        try:
-            # Try to get the user credentials
-            username = dbJSON["credentials"]["username"]
-            password = dbJSON["credentials"]["password"]
-        except:
-            print("Credentials aren't present in data.json, did you run --login <username> <password>?")
-            return
-
         with open("astralsession.txt", "rb") as astralsession:
             # Load the session cookies
             cookies = pickle.load(astralsession)
@@ -170,29 +172,3 @@ class accounts():
                 os.remove("astralsession.txt")
             
             print("[\] All local data successfully removed.")
-
-    def encryptData(self, password):
-        try:
-            from utils.classes.aes_encryption import AesEncryption
-        except:
-            print("[x] An error occured importing the AES encryption class. Did you install the dependencies?")
-            return
-
-        try:
-            dbfile = open("data.json", "r+")
-            dbJSON = json.load(dbfile)
-        except:
-            print("[x] An error occured reading the data.json file. Did you corrupt or delete it?")
-            return
-        aes = AesEncryption()
-
-        oldPass = dbJSON["credentials"]["password"]
-        newPass = aes.encrypt(oldPass, password).decode()
-        dbJSON["credentials"]["password"] = newPass
-        dbJSON["credentials"]["encrypted"] = True
-
-        dbfile.seek(0)
-        dbfile.truncate(0)
-        jsonutils.write_json(dbJSON)
-
-        print("[v] Astral password successfully encrypted.")
