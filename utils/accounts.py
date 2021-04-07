@@ -170,3 +170,29 @@ class accounts():
                 os.remove("astralsession.txt")
             
             print("[\] All local data successfully removed.")
+
+    def encryptData(self, password):
+        try:
+            from utils.classes.aes_encryption import AesEncryption
+        except:
+            print("[x] An error occured importing the AES encryption class. Did you install the dependencies?")
+            return
+
+        try:
+            dbfile = open("data.json", "r+")
+            dbJSON = json.load(dbfile)
+        except:
+            print("[x] An error occured reading the data.json file. Did you corrupt or delete it?")
+            return
+        aes = AesEncryption()
+
+        oldPass = dbJSON["credentials"]["password"]
+        newPass = aes.encrypt(oldPass, password).decode()
+        dbJSON["credentials"]["password"] = newPass
+        dbJSON["credentials"]["encrypted"] = True
+
+        dbfile.seek(0)
+        dbfile.truncate(0)
+        jsonutils.write_json(dbJSON)
+
+        print("[v] Astral password successfully encrypted.")
