@@ -38,6 +38,8 @@ class accounts():
         self.wipeLogin()
 
     def wipeLogin(self):
+        # Delete username and password from disk for security
+        
         with open("data.json", "r+") as dbfile:
             dbJSON = json.load(dbfile)
             del dbJSON["credentials"]["username"]

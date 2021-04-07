@@ -6,6 +6,7 @@ import data
 
 class embeds():
     def getAllEmbeds(self):
+        # Request headers with the user access token
         authorization = {
             "Authorization": "Bearer " + accounts().getAccessToken()
         }
@@ -38,7 +39,7 @@ class embeds():
             "color": color,
             "randomColor": randomColor
         }
-
+        # Request headers with the user access token
         authorization = {
             "Authorization": "Bearer " + accounts().getAccessToken(),
             "Content-Type": "application/json"
@@ -57,7 +58,14 @@ class embeds():
             print(embedJSON)
             return
             
-    def editEmbedPreset(self, number: int):
+    def editEmbedPreset(self, number):
+        # Check if the embed number is a valid integer.
+        try:
+            number = int(number)
+        except:
+            print("[x] Invalid integer.")
+            return
+
         title = input("Title: ")
         description = input("Description: ")
         author = input("Author: ")
@@ -76,6 +84,7 @@ class embeds():
             "color": color,
             "randomColor": randomColor
         }
+        # Request headers with the user access token
 
         authorization = {
             "Authorization": "Bearer " + accounts().getAccessToken(),
@@ -90,12 +99,14 @@ class embeds():
         print("[x] An unknown error occured. Debug info below:\n\n" + str(editRequest))
     
     def deleteEmbedPreset(self, number):
+        # Check if the embed number is a valid integer.
         try:
             number = int(number)
         except:
             print("[x] Invalid integer.")
             return
-        
+        # Request headers with the user access token
+
         authorization = {
             "Authorization": "Bearer " + accounts().getAccessToken()
         }
