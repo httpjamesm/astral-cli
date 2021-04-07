@@ -16,6 +16,12 @@ Astral CLI is an easy-to-use and lightweight (in size and memory usage) command 
 
 No need to constantly send POST requests to generate access tokens every 5 minutes because Astral CLI does it for you seamlessly. On every request, whether it's to change a setting or create a new embed profile, Astral CLI conveniently fetches a new access token in the background.
 
+## Credential Encryption
+
+Astral CLI can encrypt your Astral login password if you desire. This would protect your login password locally so that even if your device was compromised, attackers could not extract your login details.
+
+AES-CBC 256 bit encryption with 20,000 iterations and PBKDF2 hashing is used to encrypt login data, meaning you can rest assured that your login information is only accessible by you and nobody else. 
+
 ## Linux Compatible
 
 Are you using a Linux distro? No problemo. Astral CLI is independent of screenshot apps, like ShareX, so you can keep on uploading without Windows spyware.

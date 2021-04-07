@@ -29,7 +29,7 @@ class AesEncryption(object):
     :param size: int Optional, the key size (128, 192 or 256).
     :raises ValueError: if the mode or size is invalid.
     '''
-    def __init__(self, mode = 'CBC', size = 128):
+    def __init__(self, mode = 'CBC', size = 256):
         self._modes = {'CBC': AES.MODE_CBC, 'CFB': AES.MODE_CFB}
         self._sizes = (128, 192, 256)
         self._salt_len = 16
