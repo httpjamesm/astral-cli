@@ -5,4 +5,3 @@ try:
         configdata = json.load(dbfile)
 except Exception as e:
     print(e)
-

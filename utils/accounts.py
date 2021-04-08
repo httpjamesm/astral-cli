@@ -1,5 +1,8 @@
 # Libraries/Modules
-import json, requests, pickle, os
+import json
+import requests
+import pickle
+import os
 # Files
 import utils.json as jsonutils
 import data
