@@ -14,5 +14,5 @@ class files():
         filesRequest = requests.get(data.configdata["credentials"]["endpoint"] + "files/" + str(page), headers=authorization).json()
         for x in filesRequest["data"]:
             fileList = []
-            fileList.extend(["ID: " + x["id"], "Server Name: " + x["filename"], "Original Name: " + x["originalName"], "Size (MB): " + str(x["size"]/10000), "Timestamp: " + x["createdAt"], f"Deletion URL: {{}}files/delete?key={{}}".format(data.configdata["credentials"]["endpoint"], x["deletionKey"])])
+            fileList.extend(["ID: " + x["id"], "Server Name: " + x["filename"], "Original Name: " + x["originalName"], "Size (MB): " + str(x["size"]/10000), "Timestamp: " + x["createdAt"], f"Deletion URL: {{}}files/delete?key={{}}".format(data.configdata["credentials"]["endpoint"], x["deletionKey"]),"\n"])
             print('\n'.join(fileList))
