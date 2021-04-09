@@ -28,6 +28,7 @@ class embeds():
         domain = input("Site: ")
         color = input("Color: ")
         randomColor = input("Random Embed Color [true/false]: ")
+
         if randomColor.lower() not in ["true","false"]:
             print("[x] Invalid choice for random color.")
             return
@@ -97,6 +98,7 @@ class embeds():
         if editRequest["code"] == "success":
             print("[v] Successfully edited embed preset.")
             return
+        
         print("[x] An unknown error occured. Debug info below:\n\n" + str(editRequest))
     
     def deleteEmbedPreset(self, number):

@@ -3,6 +3,8 @@ import json
 import requests
 import pickle
 import os
+from dateutil import parser
+import datetime as dt
 # Files
 import utils.json as jsonutils
 import data
@@ -175,3 +177,32 @@ class accounts():
                 os.remove("astralsession.txt")
             
             print("[\] All local data successfully removed.")
+    
+    def viewProfile(self, identifier):
+        print(f"[\] Getting profile information for {{}}...\n".format(identifier))
+        # Request headers with user access token
+        authorization = {
+            "Authorization": "Bearer " + self.getAccessToken(),
+            "Content-Type": "application/json"
+        }
+        try:
+            profileJSON = json.loads(requests.get(data.configdata["credentials"]["endpoint"] + "profiles/" + identifier, headers=authorization).content)
+        except:
+            return
+            
+        if profileJSON["code"] == "success":
+            pairs = profileJSON["data"].items()
+            profileList = []
+            for item, value in pairs:
+                if item == "registrationDate":
+                    value = str(parser.parse(value))
+                profileList.append(str(item + ": " + str(value)))
+            print('\n'.join(profileList))
+            return
+        elif profileJSON["code"] == "not-found":
+            print("[x] User not found.")
+            return
+        elif profileJSON["code"] == "invalid-token":
+            print("[x] Invalid token. Did you modify the astralsession.txt file?\nUse --clear and re-login using --login.")
+            return
+        print(f"[x] An unexpected error occured. Debug info below:\n\n{{}}".format(profileJSON["code"]))

@@ -7,6 +7,7 @@ from utils.accounts import accounts
 from utils.settings import settings
 from utils.upload import upload
 from utils.embeds import embeds
+from utils.files import files
 
 class main():
     # Main file that receives CLI arguments.
@@ -36,6 +37,9 @@ class main():
 
     if "--settings" in args:
         settings().viewAllSettings()
+    if "--profile" in args:
+        argPos = args.index("--profile")
+        accounts().viewProfile(args[argPos + 1])
     if "--change" in args:
         loginPos = args.index("--change")
         try:
@@ -52,6 +56,14 @@ class main():
             upload().uploadFile(args[argPos + 1])
         except:
             print("[x] You must specify the path to a file you want to upload!")
+            exit()
+    if "--files" in args:
+        argPos = args.index("--files")
+        try:
+            files().viewFiles(args[argPos + 1])
+        except Exception as e:
+            print(e)
+            print("[x] You must specify a page number!")
             exit()
     if "--regen-upkey" in args:
         accounts().regenUploadKey()
