@@ -13,6 +13,15 @@ import data
 class accounts():
     def addToken(self, username, password):
         # Store user credentials
+    
+        endpoint = input("Astral Endpoint (optional, must end in /): ")
+        print(f'endpoint: {endpoint}')
+        if not not endpoint:
+            if list(endpoint)[-1] != "/":
+                print("[x] Endpoint URL must end in a /.")
+                return
+        else:
+            endpoint = "https://beta.astral.cool/"
         
         try:
             # Try to open the data.json file in write mode
@@ -25,7 +34,7 @@ class accounts():
             "credentials": {
                 "username": username,
                 "password": password,
-                "endpoint": "https://beta.astral.cool/",
+                "endpoint": endpoint,
                 "encrypted": False
             }
         }
