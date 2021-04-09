@@ -247,11 +247,14 @@ class accounts():
         try:
             registerRequest = requests.post(f"{endpoint}auth/register", headers=headers, data=json.dumps(dataTemplate)).json()
         except Exception as e:
+            if "Invalid URL" in str(e):
+                print(f"[x] An unexpected error occured while registering. Did you enter a valid endpoint URL? Debug info below\n\n{e}")
+                return
             print(f"[x] An unexpected error occured while registering. Debug info below\n\n{e}")
             return
         
         if registerRequest["code"] == "success":
             print(f"[v] Astral account created successfully on endpoint {endpoint}. Login with your new credentials using --login <username> <password>.")
             return
-        registerRequest = registerRequest["data"]
+
         print(f"[x] An unexpected error occured registering to Astral endpoint {endpoint}. Debug info below:\n\n{registerRequest}")
