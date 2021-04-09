@@ -16,6 +16,9 @@ class main():
 
     if "--domains" in args:
         domains().getAllDomains()
+
+    if "--register" in args:
+        accounts().register()
     if "--login" in args:
         loginPos = args.index("--login")
         try:

@@ -5,6 +5,7 @@ import pickle
 import os
 from dateutil import parser
 import datetime as dt
+import getpass
 # Files
 import utils.json as jsonutils
 import data
@@ -206,3 +207,51 @@ class accounts():
             print("[x] Invalid token. Did you modify the astralsession.txt file?\nUse --clear and re-login using --login.")
             return
         print(f"[x] An unexpected error occured. Debug info below:\n\n{{}}".format(profileJSON["code"]))
+    
+    def register(self):
+        email = input("Email: ")
+        username = input("Username: ")
+        password = getpass.getpass("Password: ")
+        passwordConf = getpass.getpass("Confirm Password: ")
+        invite = input("Invite Code: ")
+        eula = input("I accept Astral's EULA in its entirety [true/false]: ")
+
+        if password != passwordConf:
+            print("[x] Password mismatch.")
+            return
+        if eula.lower() != "true":
+            print("[x] You cannot use Astral's services without accepting the EULA.")
+            return
+        
+        endpoint = input("Astral Endpoint (optional, end URL with /): ")
+
+        if not endpoint:
+            endpoint = "https://beta.astral.cool/"
+        else:
+            if list(endpoint)[-1] != "/":
+                print("[x] Your endpoint URL must end with a \"/\".")
+                return
+        headers = {
+            "Content-Type": "application/json"
+        }
+
+        dataTemplate = {
+            "email": email,
+            "username": username,
+            "password": password,
+            "passwordConfirmation": passwordConf,
+            "invite": invite,
+            "eula": eula
+        }
+
+        try:
+            registerRequest = requests.post(f"{endpoint}auth/register", headers=headers, data=json.dumps(dataTemplate)).json()
+        except Exception as e:
+            print(f"[x] An unexpected error occured while registering. Debug info below\n\n{e}")
+            return
+        
+        if registerRequest["code"] == "success":
+            print(f"[v] Astral account created successfully on endpoint {endpoint}. Login with your new credentials using --login <username> <password>.")
+            return
+        registerRequest = registerRequest["data"]
+        print(f"[x] An unexpected error occured registering to Astral endpoint {endpoint}. Debug info below:\n\n{registerRequest}")
