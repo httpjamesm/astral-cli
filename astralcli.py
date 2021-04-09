@@ -99,6 +99,7 @@ General Usage:
     --domains                           View all Astral domains.
         
 Settings:
+    --register                          Register an account with an Astral endpoint.
     --login <username> <password>       Login to Astral with your credentials.
 
     --settings                          View all of your settings.
