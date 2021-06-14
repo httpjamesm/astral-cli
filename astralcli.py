@@ -57,7 +57,7 @@ class main():
         argPos = args.index("--upload")
         try:
             upload().uploadFile(args[argPos + 1])
-        except:
+        except Exception as e:
             print("[x] You must specify the path to a file you want to upload!")
             exit()
     if "--files" in args:

@@ -21,12 +21,14 @@ class accounts():
                 print("[x] Endpoint URL must end in a /.")
                 return
         else:
-            endpoint = "https://beta.astral.cool/"
+            endpoint = "https://api.astral.cool/"
         
         try:
             # Try to open the data.json file in write mode
             udfile = open("data.json", "xt")
-        except:
+        except Exception as e:
+            print(e)
+            print("[x] Couldn't open data.json file.")
             return
         
         # Template for user credentials
@@ -133,9 +135,9 @@ class accounts():
             # Load the session cookies
             cookies = pickle.load(astralsession)
 
-        tokenPOST = requests.post(dbJSON["credentials"]["endpoint"] + "auth/login/token", data={}, cookies=cookies)
+        tokenGET = requests.get(dbJSON["credentials"]["endpoint"] + "auth/login/", cookies=cookies)
         
-        responseJSON = json.loads(tokenPOST.content)
+        responseJSON = json.loads(tokenGET.content)
         return responseJSON["data"]["token"]
 
     def getUploadKey(self):

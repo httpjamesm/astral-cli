@@ -32,7 +32,7 @@ class upload():
         # Request headers with user access token
         try:
             authorization = {
-                "Authorization": data.configdata["credentials"]["uploadkey"]
+                "Authorization": data.configdata["credentials"]["uploadkey"]["key"]
             }
         except:
             print("[x] Couldn't find account data. Did you login yet?")
@@ -44,7 +44,7 @@ class upload():
         }
         try:
             uploadRequest = requests.post(data.configdata["credentials"]["endpoint"] + "files", files=files, headers=authorization)
-        except:
+        except Exception as e:
             print("[x] An unexpected error occured while uploading " + path + ".")
             return
         try:
@@ -58,10 +58,10 @@ class upload():
             r.withdraw()
             r.clipboard_clear()
             # Append the decoded URL to the user's clipboard
-            r.clipboard_append(requests.utils.unquote(requests.utils.quote(responseJSON["fileURL"].encode(), safe=':/')))
+            r.clipboard_append(requests.utils.unquote(requests.utils.quote(responseJSON["data"]["fileURL"].encode(), safe=':/')))
             r.update() # now it stays on the clipboard after the window is closed
             r.destroy()
-            print("Upload URL: " + requests.utils.unquote(requests.utils.quote(responseJSON["fileURL"].encode(), safe=':/')) + "\nDelete URL: " + responseJSON["deletionURL"] + "\n\n[!] Upload URL has been copied to clipboard.")
+            print("Upload URL: " + requests.utils.unquote(requests.utils.quote(responseJSON["data"]["fileURL"].encode(), safe=':/')) + "\nDelete URL: " + responseJSON["data"]["deletionURL"] + "\n\n[!] Upload URL has been copied to clipboard.")
         else:
             print("[x] Error uploading file.\n")
             if responseJSON["message"] == "Invalid mimetype":

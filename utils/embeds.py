@@ -11,7 +11,7 @@ class embeds():
         authorization = {
             "Authorization": "Bearer " + accounts().getAccessToken()
         }
-        embedRequest = requests.get(data.configdata["credentials"]["endpoint"] + "settings/embeds", headers=authorization)
+        embedRequest = requests.get(data.configdata["credentials"]["endpoint"] + "embeds", headers=authorization)
         responseJSON = json.loads(embedRequest.content)
         counter = 0
         for preset in responseJSON["data"]:
@@ -47,7 +47,7 @@ class embeds():
             "Content-Type": "application/json"
         }
 
-        embedRequest = requests.put(data.configdata["credentials"]["endpoint"] + "settings/embeds", headers=authorization, data=json.dumps(dataTemplate))
+        embedRequest = requests.put(data.configdata["credentials"]["endpoint"] + "embeds", headers=authorization, data=json.dumps(dataTemplate))
         embedJSON = json.loads(embedRequest.content)
         if embedJSON["code"] == "success":
             print("[v] Successfully created embed preset.")
@@ -93,7 +93,7 @@ class embeds():
             "Content-Type": "application/json"
         }
 
-        editRequest = requests.patch(data.configdata["credentials"]["endpoint"] + "settings/embeds/"+ str(number), headers=authorization, data=json.dumps(dataTemplate)).json()
+        editRequest = requests.patch(data.configdata["credentials"]["endpoint"] + "embeds/"+ str(number), headers=authorization, data=json.dumps(dataTemplate)).json()
 
         if editRequest["code"] == "success":
             print("[v] Successfully edited embed preset.")
@@ -113,7 +113,7 @@ class embeds():
         authorization = {
             "Authorization": "Bearer " + accounts().getAccessToken()
         }
-        deleteRequest = requests.delete(data.configdata["credentials"]["endpoint"] + "settings/embeds/" + str(number), headers=authorization)
+        deleteRequest = requests.delete(data.configdata["credentials"]["endpoint"] + "embeds/" + str(number), headers=authorization)
         requestJSON = json.loads(deleteRequest.content)
         if requestJSON["code"] == "success":
             print("[v] Embed " + str(number) + " has been deleted.")
